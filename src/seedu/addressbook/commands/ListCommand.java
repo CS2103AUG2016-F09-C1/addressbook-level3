@@ -22,4 +22,14 @@ public class ListCommand extends Command {
         List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
     }
+
+    /**
+     * Prepare arguments in the context of the list command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    public Command prepare(String args) {
+        return new ListCommand();
+    }
 }

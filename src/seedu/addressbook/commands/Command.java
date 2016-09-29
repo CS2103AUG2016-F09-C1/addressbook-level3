@@ -3,8 +3,11 @@ package seedu.addressbook.commands;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.parser.Parser;
+import seedu.addressbook.parser.Parser.ParseException;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
@@ -65,4 +68,24 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+    
+//    public abstract Command prepare(String args);
+    
+    /**
+     * Parses the given arguments string as a single index number.
+     *
+     * @param args arguments string to parse as index number
+     * @return the parsed index number
+     * @throws ParseException if no region of the args string could be found for the index
+     * @throws NumberFormatException the args string region is not a valid number
+     */
+    protected static int parseArgsAsDisplayedIndex(String args) throws ParseException, NumberFormatException {
+        final Matcher matcher = Parser.PERSON_INDEX_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new ParseException("Could not find index number to parse");
+        }
+        return Integer.parseInt(matcher.group("targetIndex"));
+    }
+
+    public abstract Command prepare(String arguments);
 }

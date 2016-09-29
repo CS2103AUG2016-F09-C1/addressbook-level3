@@ -27,4 +27,14 @@ public class HelpCommand extends Command {
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
     }
+
+    /**
+     * Prepare arguments in the context of the help command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    public Command prepare(String args) {
+        return new HelpCommand();
+    }
 }
