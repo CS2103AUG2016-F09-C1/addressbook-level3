@@ -1,8 +1,12 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.parser.Parser;
+
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.*;
+import java.util.regex.Matcher;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -17,8 +21,10 @@ public class FindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n\t"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final Set<String> keywords;
+    private Set<String> keywords;
 
+    public FindCommand() {}
+    
     public FindCommand(Set<String> keywords) {
         this.keywords = keywords;
     }
@@ -51,6 +57,25 @@ public class FindCommand extends Command {
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Prepare arguments in the context of the find person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    public Command prepare(String args) {
+        final Matcher matcher = Parser.KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new FindCommand(keywordSet);
     }
 
 }

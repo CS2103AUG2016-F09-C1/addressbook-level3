@@ -16,4 +16,14 @@ public class ExitCommand extends Command {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
+    /**
+     * Prepare arguments in the context of the exit command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    public Command prepare(String args) {
+        return new ExitCommand();
+    }
+
 }

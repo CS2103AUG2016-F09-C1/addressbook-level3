@@ -19,4 +19,14 @@ public class ClearCommand extends Command {
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    /**
+     * Prepare arguments in the context of the clear command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    public Command prepare(String args) {
+        return new ClearCommand();
+    }
 }

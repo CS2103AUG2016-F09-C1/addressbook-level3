@@ -17,4 +17,11 @@ public class IncorrectCommand extends Command{
         return new CommandResult(feedbackToUser);
     }
 
+    /**
+     * Method is not used.
+     */
+    public Command prepare(String args) {
+        return null;
+    }
+
 }
